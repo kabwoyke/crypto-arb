@@ -1,0 +1,15 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync --frozen
+      - run: make lint
+      - run: make test
+      # Migration check (alembic up/down) is added in Phase 1 once a schema exists.
